@@ -58,7 +58,7 @@ sLinkedList::sLinkedList (int value) {
   start->value = value;
   start->next = NULL;
 
-  length = 0;   // initial length of the linked list
+  length = 1;   // initial length of the linked list
 
   last = start;
 }
@@ -76,18 +76,20 @@ void sLinkedList::append(int value) {
 
   // update the pointer to last element
   last = temp;
+  length++;
 }
 
 void sLinkedList::print() {
+  // TODO create a better way to find elements
   find(-1, true);
 }
 
 struct node * sLinkedList::find(int key, bool print = false) {
   // find a node in the linked list which has value == key, and return a pointer to it.
   // The parameter 'print' toggles whether to print out the elements as it is traversing the list
-  // ========================================================================================
-  /* TODO: Handle the case when the element doesn't exist */
+
   struct node *currentNode = start;
+  int counter = 1;
 
   while(currentNode->value != key) {
     if (print) {
@@ -97,19 +99,22 @@ struct node * sLinkedList::find(int key, bool print = false) {
 
     currentNode = currentNode->next;
 
+    counter++;
     if (currentNode->next == NULL) {
       // reached the end, break and return NULL, i.e. this key was not found
-      if (print) {
-        cout << currentNode->value << "->NULL" << endl;
-      }
-      return NULL;
+      break;
     }
   }
 
   if (print) {
     cout << currentNode->value << "->NULL" << endl;
   }
-  return currentNode;
+
+  if (counter == length) {
+    return NULL;
+  } else {
+    return currentNode;
+  }
 }
 
 
@@ -124,5 +129,7 @@ int main() {
 
   one.print();
 
-  // one.find(3, true);
+  if (one.find(3, false) == NULL) {
+    cout << "Sorry not found" << endl;
+  }
 }
