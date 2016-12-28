@@ -12,11 +12,12 @@ using namespace std;
 
 // node DEFINITION
 // structs are named in camelCase by convention
+
 struct node{
   /*
      A node is a single element of a linked list. 
      It has a value/key and a pointer "next" which points to the next element
-     By default, next is NULL.
+     By default, next is NULL. In this implementation, the node only contains a single INT.
    */
   int value;
   struct node *next; 
@@ -25,14 +26,29 @@ struct node{
 
 class sLinkedList {
   /*
-    The Linkedlist class implements a singly linked list
+    Implements a singly linked list, which chains nodes together.
+    Private elements:
+    ==============================================================
+    start   - A pointer to the first node
+    lastkey - The value of the last element of the linked list (used for internal methods)
+    length  - The length of the linked list (updated with each append)
+
+    Public methods:
+    ==============================================================
+    - Constructor
+    - Appending a new element to the end of the linked list
+    - printing the linked list
+    - finding an element in the linked list, and returning a pointer to it
   */
   struct node *start;
+  int lastkey;
+  int length;
 
   public:
     sLinkedList (int value);
     void append(int value);
     void print();
+    struct node *find(int key, bool print);
 };
 
 sLinkedList::sLinkedList (int value) {
@@ -41,32 +57,46 @@ sLinkedList::sLinkedList (int value) {
   start = new(struct node);
   start->value = value;
   start->next = NULL;
+
+  length = 0;   // initial length of the linked list
 }
 
 void sLinkedList::append(int value) {
   // append to the end of the linked list
-  // traverse the list, go to the end and insert element
-  struct node *currentNode = start;
+  // start by getting the pointer to the element with the given value
+  struct node *last = find(value, false);
 
-  while(currentNode->next != NULL) {
-    currentNode = currentNode->next;
-  }
-
+  // create last node as a seperate node
   struct node *temp = new(struct node);
   temp->value = value;
   temp->next = NULL;
-  currentNode->next = temp;
+  lastkey = value;
+
+  // break the chain and append to the linked list
+  last->next = temp;
 }
 
 void sLinkedList::print() {
-  // print out the elements of the singly linked list
+  find(lastkey, true);
+}
+
+struct node * sLinkedList::find(int key, bool print = false) {
+  // find a node in the linked list which has value == key, and return a pointer to it.
+  // The parameter 'print' toggles whether to print out the elements as it is traversing the list
+  // ========================================================================================
+  /* TODO: Handle the case when the element doesn't exist */
   struct node *currentNode = start;
 
-  while(currentNode->next != NULL) {
-    cout << currentNode->value << "->";
+  while(currentNode->value != key && currentNode->next != NULL) {
+    if (print) {
+      cout << currentNode->value << "->";
+    }
     currentNode = currentNode->next;
   }
-  cout << currentNode->value << "->NULL" << endl;
+  if (print) {
+    cout << currentNode->value << "->NULL" << endl;
+  }
+  return currentNode;
 }
 
 
@@ -79,4 +109,6 @@ int main() {
   one.append(0);
 
   one.print();
+
+  one.find(3, true);
 }
