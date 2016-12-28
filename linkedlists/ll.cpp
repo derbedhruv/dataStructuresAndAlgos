@@ -30,7 +30,7 @@ class sLinkedList {
     Private elements:
     ==============================================================
     start   - A pointer to the first node
-    lastkey - The value of the last element of the linked list (used for internal methods)
+    last    - A pointer to the last element of the linked list (used for internal methods)
     length  - The length of the linked list (updated with each append)
 
     Public methods:
@@ -41,7 +41,7 @@ class sLinkedList {
     - finding an element in the linked list, and returning a pointer to it
   */
   struct node *start;
-  int lastkey;
+  struct node *last;
   int length;
 
   public:
@@ -59,25 +59,27 @@ sLinkedList::sLinkedList (int value) {
   start->next = NULL;
 
   length = 0;   // initial length of the linked list
+
+  last = start;
 }
 
 void sLinkedList::append(int value) {
   // append to the end of the linked list
   // start by getting the pointer to the element with the given value
-  struct node *last = find(value, false);
-
   // create last node as a seperate node
   struct node *temp = new(struct node);
   temp->value = value;
   temp->next = NULL;
-  lastkey = value;
 
   // break the chain and append to the linked list
   last->next = temp;
+
+  // update the pointer to last element
+  last = temp;
 }
 
 void sLinkedList::print() {
-  find(lastkey, true);
+  find(-1, true);
 }
 
 struct node * sLinkedList::find(int key, bool print = false) {
@@ -87,12 +89,23 @@ struct node * sLinkedList::find(int key, bool print = false) {
   /* TODO: Handle the case when the element doesn't exist */
   struct node *currentNode = start;
 
-  while(currentNode->value != key && currentNode->next != NULL) {
+  while(currentNode->value != key) {
     if (print) {
+      // print flag is TRUE, print values as nodes are traversed
       cout << currentNode->value << "->";
     }
+
     currentNode = currentNode->next;
+
+    if (currentNode->next == NULL) {
+      // reached the end, break and return NULL, i.e. this key was not found
+      if (print) {
+        cout << currentNode->value << "->NULL" << endl;
+      }
+      return NULL;
+    }
   }
+
   if (print) {
     cout << currentNode->value << "->NULL" << endl;
   }
@@ -107,8 +120,9 @@ int main() {
   one.append(3);
   one.append(44);
   one.append(0);
+  one.append(3);
 
   one.print();
 
-  one.find(3, true);
+  // one.find(3, true);
 }
