@@ -22,16 +22,20 @@ struct node{
   struct node *next; 
 };
 
-class LinkedList {
+
+class sLinkedList {
+  /*
+    The Linkedlist class implements a singly linked list
+  */
   struct node *start;
 
   public:
-    LinkedList (int value);
+    sLinkedList (int value);
     void append(int value);
     void print();
 };
 
-LinkedList::LinkedList (int value) {
+sLinkedList::sLinkedList (int value) {
   // Constructor for a linkedlist
   // add value to the start node, make it point to NULL
   start = new(struct node);
@@ -39,7 +43,7 @@ LinkedList::LinkedList (int value) {
   start->next = NULL;
 }
 
-void LinkedList::append(int value) {
+void sLinkedList::append(int value) {
   // append to the end of the linked list
   // traverse the list, go to the end and insert element
   struct node *currentNode = start;
@@ -54,7 +58,7 @@ void LinkedList::append(int value) {
   currentNode->next = temp;
 }
 
-void LinkedList::print() {
+void sLinkedList::print() {
   // print out the elements of the singly linked list
   struct node *currentNode = start;
 
@@ -69,7 +73,7 @@ void LinkedList::print() {
 int main() {
   cout << "Will be implementing a simple Linked List." << endl;
   node *newnode = new(struct node);
-  LinkedList one = LinkedList(5);
+  sLinkedList one = sLinkedList(5);
   one.append(3);
   one.append(44);
   one.append(0);
