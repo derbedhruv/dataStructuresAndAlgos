@@ -81,40 +81,31 @@ void sLinkedList::append(int value) {
 
 void sLinkedList::print() {
   // TODO create a better way to find elements
-  find(-1, true);
+  find(length, true);
 }
 
-struct node * sLinkedList::find(int key, bool print = false) {
-  // find a node in the linked list which has value == key, and return a pointer to it.
+struct node * sLinkedList::find(int index, bool print = false) {
+  // find a node in the linked list at a given index, and return a pointer to it.
   // The parameter 'print' toggles whether to print out the elements as it is traversing the list
 
   struct node *currentNode = start;
   int counter = 1;
 
-  while(currentNode->value != key) {
+  while(counter < index) {
     if (print) {
       // print flag is TRUE, print values as nodes are traversed
       cout << currentNode->value << "->";
     }
 
     currentNode = currentNode->next;
-
     counter++;
-    if (currentNode->next == NULL) {
-      // reached the end, break and return NULL, i.e. this key was not found
-      break;
-    }
   }
 
   if (print) {
     cout << currentNode->value << "->NULL" << endl;
   }
 
-  if (counter == length) {
-    return NULL;
-  } else {
-    return currentNode;
-  }
+  return currentNode;
 }
 
 
@@ -128,8 +119,4 @@ int main() {
   one.append(3);
 
   one.print();
-
-  if (one.find(3, false) == NULL) {
-    cout << "Sorry not found" << endl;
-  }
 }
