@@ -36,9 +36,11 @@ class sLinkedList {
     Public methods:
     ==============================================================
     - Constructor
-    - Appending a new element to the end of the linked list
+    - Appending a new element to the end of the linked list (generalize to insert at a position)
     - printing the linked list
-    - finding an element in the linked list, and returning a pointer to it
+    - finding an element in the linked list at a particular index, and returning a pointer to it
+    - removing an element at a particular position
+    - reversing the linked list
   */
   struct node *start;
   struct node *last;
@@ -48,7 +50,9 @@ class sLinkedList {
     sLinkedList (int value);
     void append(int value);
     void print();
-    struct node *find(int key, bool print);
+    struct node *find(int index, bool print);
+    void remove(int index);
+    void reverse();
 };
 
 sLinkedList::sLinkedList (int value) {
@@ -108,6 +112,34 @@ struct node * sLinkedList::find(int index, bool print = false) {
   return currentNode;
 }
 
+void sLinkedList::remove(int index) {
+  // remove the element at index and join the linked list
+  // first get a pointer to the element just before the index
+  // and just after the index, and link them together
+  // index is 1-indexed
+  if (index <= 1) {
+    // this is the start node (we disregard negative numbers)
+    // we simply make the start node == the 3rd node
+    start = find(2, false);
+    length--;
+
+  } else if (index < length) {
+    // index specified is in the middle of the list
+    struct node *before = find(index - 1, false);
+    struct node *current = before->next;    
+    struct node *after = current->next;    
+
+    // Link before to after
+    before->next = after;
+    length--;
+  } else if (index >= length) {
+    // if the index is greater than the length, the last element will be removed
+    struct node *before = find(length - 1, false);
+    before->next = NULL;
+    length--;
+  }
+}
+
 
 int main() {
   cout << "Will be implementing a simple Linked List." << endl;
@@ -119,4 +151,8 @@ int main() {
   one.append(3);
 
   one.print();
+
+  one.remove(5);
+  one.print();
+
 }
