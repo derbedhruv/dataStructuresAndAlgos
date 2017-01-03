@@ -32,51 +32,79 @@ class Linkedlist:
 			current_Node = current_Node.next
 		print "NULL"
 
+	def delete(self, pointer):
+		# pointer is a pointer to the node that has to be deleted
+		# Will do a scan from the start - O(n) time complexity unfortunately
+		current_Node = self.startNode
+		if (current_Node != None):
+			while(current_Node.next != None):
+				if (current_Node.next != pointer):
+					current_Node = current_Node.next
+				else:
+					break
 
-## Interview practice question: will code up a linkedlist which has two types of elements and then use the "runner" approach to change the nodes to alternate between each type
-count = 2
-type1 = [0 for _ in range(count)]
-type2 = ['x' for _ in range(count)]
+		current_Node.next = pointer.next
 
-L = Linkedlist()
 
-# insert first type of element
-for t1 in type1:
-	L.insert(Node(t1))
+if __name__ == "__main__":
+	## Interview practice question: will code up a linkedlist which has two types of elements and then use the "runner" approach to change the nodes to alternate between each type
+	count = 2
+	type1 = [0 for _ in range(count)]
+	type2 = ['x' for _ in range(count)]
 
-for t2 in type2:
-	L.insert(Node(t2))
+	L = Linkedlist()
 
-print "First linked list:"
-L.display()
+	# insert first type of element
+	for t1 in type1:
+		L.insert(Node(t1))
 
-# Now we will apply the runner method
-pointer1 = L.startNode
-pointer2 = L.startNode
+	for t2 in type2:
+		L.insert(Node(t2))
 
-while(pointer2 != None):
-	pointer1 = pointer1.next
+	print "First linked list:"
+	L.display()
 
-	for _ in range(2):
-		pointer2 = pointer2.next
+	# Now we will apply the runner method
+	pointer1 = L.startNode
+	pointer2 = L.startNode
 
-# Now the second pointer is at the end and the first one is at the middle, now re-shuffle
-# Move pointer2 to the start again, and advance pointer1 to the first node of the second type
-# and do a pass through the whole linked list
-pointer2 = L.startNode
+	while(pointer2 != None):
+		pointer1 = pointer1.next
 
-while(True):
-	temp = pointer2.next
-	pointer2.next = pointer1
-	pointer2 = temp
+		for _ in range(2):
+			pointer2 = pointer2.next
 
-	temp = pointer1
-	pointer1 = pointer1.next
-	if (pointer1 == None):
-		temp.next = None
-		break
-	temp.next = pointer2
+	# Now the second pointer is at the end and the first one is at the middle, now re-shuffle
+	# Move pointer2 to the start again, and advance pointer1 to the first node of the second type
+	# and do a pass through the whole linked list
+	pointer2 = L.startNode
 
-L.display()
+	while(True):
+		temp = pointer2.next
+		pointer2.next = pointer1
+		pointer2 = temp
+
+		temp = pointer1
+		pointer1 = pointer1.next
+		if (pointer1 == None):
+			temp.next = None
+			break
+		temp.next = pointer2
+
+	L.display()
+
+
+	## Second interview questoin - removing duplicates in a linked list
+	LL = Linkedlist()
+	LL.insert(Node(0))
+	LL.insert(Node(1))
+	LL.insert(Node(0))
+
+	splnode = Node(11)
+	LL.insert(splnode)
+	LL.display()
+	LL.delete(splnode)
+	LL.display()
+
 
 
