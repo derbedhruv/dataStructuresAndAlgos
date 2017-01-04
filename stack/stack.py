@@ -23,6 +23,7 @@ class Stack(Linkedlist):
 			self.startNode = self.startNode.next
 			return pop_value
 		except AttributeError:
+			# empty stack
 			return None
 
 	def push(self, newval):
@@ -47,4 +48,5 @@ class Queue(Linkedlist):
 			self.delete(self.startNode)
 			return first_in_queue
 		except AttributeError:
+			# empty queue
 			return None
