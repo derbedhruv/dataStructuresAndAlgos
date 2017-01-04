@@ -1,13 +1,40 @@
 '''
 	SINGLY LINKED LIST IMPLEMENTATION IN PYTHON
+
+	Singly linked list with basic methods implemented as python class. 
+	Depends on the Node class - which can take any single element as its key value.
 '''
 # create Node class
 class Node:
+	# ---------------------------------------- #
+	# Node class 							   #
+	# ---------------------------------------- #
+	# A node has the following attributes:	   #
+	#   * value - a single element (any type)  #
+	#   * next - a pointer to a Node 		   #
+	# ---------------------------------------- #
 	def __init__(self, value, next=None):
 		self.value = value
 		self.next = next
 
 class Linkedlist:
+	# ---------------------------------------- #
+	# Singly linked list class				   #
+	# ---------------------------------------- #
+	# A linked list is a collection of nodes,  #
+	# which are chained together in one 	   #
+	# direction. They have the following	   #
+	# attributes:							   #
+	#   * startNode - a pointer to the first   #
+	#   node is the chain 					   #
+	#										   #
+	# They have the following methods:		   #
+	#   * insert() - inserts a new Node at the #
+	#     end of the linked list 			   #
+	# 	* display() - pretty print linked list #
+	#	* delete() - deletes the Node in the   #
+	#	  linked list specified by a pointer   #
+	# ---------------------------------------- #
 	def __init__(self, startNode = None):
 		self.startNode = startNode
 
@@ -32,7 +59,7 @@ class Linkedlist:
 			current_Node = current_Node.next
 		print "NULL"
 
-	def delete(self, pointer):
+	def delete(self, pointer=self.startNode):
 		# pointer is a pointer to the node that has to be deleted
 		# Will do a scan from the start - O(n) time complexity unfortunately
 		current_Node = self.startNode
