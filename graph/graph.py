@@ -22,7 +22,14 @@ class Graph:
 	# Node objects. The key will be the value of a Nodes. 		#
 	# We will also maintain a dict which maps keys to Nodes. 	#
 	#															#
-	# It will have the following methods:
+	# It has the following methods:
+	#   * add_connection: Adds a connection between two Nodes 	#
+	# 	  identified by their key values. If nodes corresponding#
+	#	  to either of these keys do not exist, they are created#
+	#	  and added to the graph.
+	#	* display: Pretty prints the graph
+	#	* remove_connection: removes a connection between two	#
+	#	  elements. If they do not exist, simply returns false. #
 	# ---------------------------------------------------------	#
 	def __init__(self, adjacency_list=defaultdict(list)):
 		self.adjacency_list = adjacency_list

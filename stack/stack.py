@@ -14,8 +14,9 @@ class Stack(Linkedlist):
 	# A LIFO buffer							   #
 	# ---------------------------------------- #
 	# Define the following methods:			   #
-	#   * pop() - removes last element		   #
-	#   * push() - inserts new last element    #
+	#   * pop - removes last element		   #
+	#   * push - inserts new last element      #
+	#	* isEmpty - returns True if empty 	   #
 	# ---------------------------------------- #
 	def pop(self):
 		try:
@@ -29,6 +30,15 @@ class Stack(Linkedlist):
 	def push(self, newval):
 		newNode = Node(value=newval, next=self.startNode)
 		self.startNode = newNode
+
+	def isEmpty(self):
+		# check for stack being empty by checking if
+		# startNode of underlying linked list is None
+		if self.startNode == None:
+			return True
+		else:
+			return False
+
 
 # Queue implementation
 class Queue(Linkedlist):
