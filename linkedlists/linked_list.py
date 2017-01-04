@@ -59,9 +59,12 @@ class Linkedlist:
 			current_Node = current_Node.next
 		print "NULL"
 
-	def delete(self, pointer=self.startNode):
+	def delete(self, pointer):
 		# pointer is a pointer to the node that has to be deleted
 		# Will do a scan from the start - O(n) time complexity unfortunately
+		if self.startNode == pointer:
+			self.startNode = self.startNode.next
+			return
 		current_Node = self.startNode
 		if (current_Node != None):
 			while(current_Node.next != None):

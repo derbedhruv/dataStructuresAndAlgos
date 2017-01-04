@@ -1,5 +1,5 @@
 '''
-	STACK CLASS IMPLEMENTATION IN PYTHON
+	STACK and QUEUE IMPLEMENTATION IN PYTHON
 
 	Will implement using a singly linked list, extending the class written previously
 '''
@@ -28,3 +28,18 @@ class Stack(Linkedlist):
 	def push(self, newval):
 		newNode = Node(value=newval, next=self.startNode)
 		self.startNode = newNode
+
+# Queue implementation
+class Queue(Linkedlist):
+	# -------------------------------------------------	#
+	# A FIFO buffer							   			#
+	# ------------------------------------------------- #
+	# Define the following methods:			   			#
+	#   * add() - adds an item to the end of the queue  #
+	# 	* remove() - removes and returns the first item #
+	# ------------------------------------------------- #
+	def add(self, newval):
+		self.insert(newval)
+
+	def remove(self):
+		self.delete(self.startNode)
