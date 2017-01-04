@@ -39,7 +39,12 @@ class Queue(Linkedlist):
 	# 	* remove() - removes and returns the first item #
 	# ------------------------------------------------- #
 	def add(self, newval):
-		self.insert(newval)
+		self.insert(Node(newval))
 
 	def remove(self):
-		self.delete(self.startNode)
+		try:
+			first_in_queue = self.startNode.value
+			self.delete(self.startNode)
+			return first_in_queue
+		except AttributeError:
+			return None
