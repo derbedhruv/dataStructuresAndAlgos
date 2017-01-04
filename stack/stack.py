@@ -6,7 +6,7 @@
 import sys
 sys.path.append("../linkedlists/")
 
-from linked_list import Linkedlist
+from linked_list import Linkedlist, Node
 
 # Now we create a stack class which extends this
 class Stack(Linkedlist):
@@ -20,4 +20,8 @@ class Stack(Linkedlist):
 	def pop(self):
 		pop_value = self.startNode.value
 		self.startNode = startNode.next
-		return 
+		return pop_value
+
+	def push(self, newval):
+		newNode = Node(value=newval, next=self.startNode)
+		self.startNode = newNode
