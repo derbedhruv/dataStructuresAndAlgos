@@ -18,9 +18,12 @@ class Stack(Linkedlist):
 	#   * push() - inserts new last element    #
 	# ---------------------------------------- #
 	def pop(self):
-		pop_value = self.startNode.value
-		self.startNode = startNode.next
-		return pop_value
+		try:
+			pop_value = self.startNode.value
+			self.startNode = self.startNode.next
+			return pop_value
+		except AttributeError:
+			return None
 
 	def push(self, newval):
 		newNode = Node(value=newval, next=self.startNode)
