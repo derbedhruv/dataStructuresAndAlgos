@@ -3,15 +3,21 @@
 '''
 
 def mergesort(array):
-	"""
-	sorts input list "array" recursively using the merge sort routine
-	"""
+	# ---------------------------------------- #
+	# Merge sort 							   #
+	# ---------------------------------------- #
+	# Takes an array and returns the sorted    #
+	# version of it. Takes a list of ints. 	   #
+	# Runs in O(nlogn) time and space O(n)	   #
+	# ---------------------------------------- #
 
 	def merge(a, b):
-		"""
-		merge subroutine
-		Merges two sorted lists (a and b) together
-		"""
+		# ---------------------------------------- #
+		# Merge subroutine						   #
+		# ---------------------------------------- #
+		# Takes two sorted lists a and b and 	   #
+		# returns a single sorted list 			   #
+		# ---------------------------------------- #
 		def lowest_candidate(p, q):
 			return min((x, i) for i,x in enumerate([p, q]) if x != None)
 
