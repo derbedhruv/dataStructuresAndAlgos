@@ -31,7 +31,8 @@ class Graph:
 	#	* remove_connection: removes a connection between two	#
 	#	  elements. If they do not exist, simply returns false. #
 	# ---------------------------------------------------------	#
-	def __init__(self, adjacency_list=defaultdict(list)):
+	def __init__(self, adjacency_list=defaultdict(list), directed=True):
+		self.directed = directed
 		self.adjacency_list = adjacency_list
 		self.nodes = {}
 		for node in adjacency_list:
@@ -42,6 +43,9 @@ class Graph:
 		# First will check if nodes corresponding to these keys exist.
 		# If they do not, it will create new nodes corresponding to them and add a connection between the two.
 		# It will also return False if so.
+		#
+		# If the graph is a directed one (default), then it will make a one-way connection. 
+		# Otherwise will make a two-way connection
 		flag = True
 		try:
 			node1 = self.nodes[key1]
@@ -58,6 +62,8 @@ class Graph:
 			flag = False
 
 		self.adjacency_list[node1].append(node2)
+		if self.directed == False:
+			self.adjacency_list[node1].append(node1)
 		return flag
 
 	def display(self):
@@ -70,6 +76,8 @@ class Graph:
 		# If it fails (i.e. if either of the nodes do not exist), returns False
 		try:
 			self.adjacency_list[node1].remove(node2)
+			if self.directed == False:
+				self.adjacency_list[node2].remove(node1)
 			return True
 		except:
 			return False
