@@ -38,13 +38,14 @@ class Queue(Linkedlist):
 	# A FIFO buffer							   			#
 	# ------------------------------------------------- #
 	# Define the following methods:			   			#
-	#   * add() - adds an item to the end of the queue  #
-	# 	* remove() - removes and returns the first item #
+	# <Named same as stack to make it easier to change	#
+	#   * push - adds an item to the end of the queue  	#
+	# 	* pop - removes and returns the first item 		#
 	# ------------------------------------------------- #
-	def add(self, newval):
+	def push(self, newval):
 		self.insert(Node(newval))
 
-	def remove(self):
+	def pop(self):
 		try:
 			first_in_queue = self.startNode.value
 			self.delete(self.startNode)
