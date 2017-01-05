@@ -50,18 +50,18 @@ def bfs(graph, startNode, verbose=False):
 	# In this case, it will simply print out the elements as it #
 	# traverses them. 											#
 	# ---------------------------------------------------------	#
-	stack = Stack()
+	queue = Queue()
 	# We start by putting the startNode in the stack
 	# TODO: handle the case when the startNode is not in the graph
-	stack.push(startNode.key)
+	queue.add(startNode.key)
 	explored = []
 
 	# Begin the search
 	# Pop from stack, see if the element has been explored
 	# If not, add to explored list and add its children to the stack
-	while(stack.isEmpty() == False):
-		# pop from stack
-		current_node = graph.nodes[stack.pop()]
+	while(queue.isEmpty() == False):
+		# pop from queue
+		current_node = graph.nodes[queue.remove()]
 		if current_node in explored:
 			continue
 
@@ -69,6 +69,6 @@ def bfs(graph, startNode, verbose=False):
 			print "Exploring", current_node.key
 		explored.append(current_node)
 		for child in graph.adjacency_list[current_node]:
-			# add all children to the stack
-			stack.push(child.key)
+			# add all children to the queue
+			queue.add(child.key)
 	return
