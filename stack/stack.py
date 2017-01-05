@@ -31,14 +31,6 @@ class Stack(Linkedlist):
 		newNode = Node(value=newval, next=self.startNode)
 		self.startNode = newNode
 
-	def isEmpty(self):
-		# check for stack being empty by checking if
-		# startNode of underlying linked list is None
-		if self.startNode == None:
-			return True
-		else:
-			return False
-
 
 # Queue implementation
 class Queue(Linkedlist):

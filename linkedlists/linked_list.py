@@ -75,6 +75,14 @@ class Linkedlist:
 
 		current_Node.next = pointer.next
 
+	def isEmpty(self):
+		# check for linked list being empty by checking if
+		# startNode is None. Used in stacks and queues
+		if self.startNode == None:
+			return True
+		else:
+			return False
+
 
 if __name__ == "__main__":
 	## Interview practice question: will code up a linkedlist which has two types of elements and then use the "runner" approach to change the nodes to alternate between each type
