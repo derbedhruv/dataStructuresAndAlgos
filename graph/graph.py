@@ -81,3 +81,69 @@ class Graph:
 			return True
 		except:
 			return False
+
+class Heap:
+	# --------------------------------------------------------- #
+	# A Heap (min or max)                                       #
+	# --------------------------------------------------------- #
+	# A min or max heap, specified during initialization. It 
+	# will be implemented as a list of GraphNode objects (other)
+	# object types can also be passed, but they MUST have an
+	# attribute "key" which will be used to compare them.
+	# 
+	# Define the following methods:
+	#   * check_property: An internal function which checks if 
+	#	  the heap property has been maintained.
+	#	* insert: insert a new element into the heap
+	# --------------------------------------------------------- #
+	def __init__(self, htype="min", node=GraphNode):
+		# the comparison functions
+		# return True if the 
+		def minfunc(node_of_interest, comparison_node):
+			if node_of_interest.key >= comparison_node.key:
+				return True
+			return False
+		def maxfunc(node_of_interest, comparison_node):
+			if node_of_interest.key <= comparison_node.key:
+				return True
+			return False
+
+		self.node = GraphNode
+		self.heap = []
+		if htype == "min":
+			self.comparison_func = minfunc
+		else:
+			self.comparison_func = maxfunc
+
+	def parent(self, node_of_interest):
+		# returns the parent node of the node specified
+		# integer division is used
+		# The children of node 'n' are 2n+1 and 2n+2 in a 0-indexed system.
+		return self.heap[(self.heap.index(node_of_interest)-1)/2]
+
+	def check_property(self, node_of_interest):
+		return self.comparison_func(node_of_interest, self.parent(node_of_interest))
+
+	def swap(self, node1, node2):
+		# swaps the actual node pointers in self.heap
+		self.heap[self.heap.index(node2)], self.heap[self.heap.index(node1)] = self.heap[self.heap.index(node1)], self.heap[self.heap.index(node2)]
+
+	def enforce_heap_property(self, node_of_interest):
+		# start at the node of interest, and recursively enforce the heap property locally till it is globally enforced
+		if self.check_property(node_of_interest) == False:
+			# self.swap(node_of_interest, self.parent(node_of_interest))
+			temp = node_of_interest
+			parent = self.parent(node_of_interest)
+			self.heap[self.heap.index(node_of_interest)] = self.parent(node_of_interest)
+			self.heap[self.heap.index(parent)] = temp
+			self.enforce_heap_property(temp)
+		return
+
+	def display(self):
+		print [node.key for node in self.heap]
+
+	def insert(self, keyval):
+		newNode = self.node(keyval)
+		self.heap.append(newNode)
+		self.enforce_heap_property(newNode)
+
