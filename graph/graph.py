@@ -11,8 +11,8 @@ class GraphNode:
 	# More attributes can be added later to make it a rich		#
 	# collection of values about some object. 					#
 	# ---------------------------------------------------------	#
-	def __init__(self, value):
-		self.key = value
+	def __init__(self, key):
+		self.key = key
 
 class Graph:
 	# --------------------------------------------------------- #
