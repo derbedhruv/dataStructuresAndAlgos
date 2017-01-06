@@ -132,11 +132,10 @@ class Heap:
 		# start at the node of interest, and recursively enforce the heap property locally till it is globally enforced
 		if self.check_property(node_of_interest) == False:
 			# self.swap(node_of_interest, self.parent(node_of_interest))
-			temp = node_of_interest
 			parent = self.parent(node_of_interest)
 			self.heap[self.heap.index(node_of_interest)] = self.parent(node_of_interest)
-			self.heap[self.heap.index(parent)] = temp
-			self.enforce_heap_property(temp)
+			self.heap[self.heap.index(parent)] = node_of_interest
+			self.enforce_heap_property(node_of_interest)
 		return
 
 	def display(self):
