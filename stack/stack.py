@@ -3,8 +3,8 @@
 
 	Will implement using a singly linked list, extending the class written previously
 '''
-import sys
-sys.path.append("../linkedlists/")
+import os, sys
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "linkedlists/"))
 
 from linked_list import Linkedlist, Node
 
