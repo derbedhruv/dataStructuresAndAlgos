@@ -39,7 +39,7 @@ class Graph:
 		for node in adjacency_list:
 			self.nodes[node.key] = node
 
-	def add_connection(self, key1, key2):
+	def add_connection(self, key1, key2, distance=1):
 		# Adds a connection from val1 to val2 in the graph.
 		# First will check if nodes corresponding to these keys exist.
 		# If they do not, it will create new nodes corresponding to them and add a connection between the two.
@@ -47,6 +47,9 @@ class Graph:
 		#
 		# If the graph is a directed one (default), then it will make a one-way connection. 
 		# Otherwise will make a two-way connection
+		#
+		# distance represents the distance between the two nodes, default 1 unit
+
 		flag = True
 		try:
 			node1 = self.nodes[key1]
@@ -62,15 +65,15 @@ class Graph:
 			self.nodes[key2] = node2
 			flag = False
 
-		self.adjacency_list[node1].append(node2)
+		self.adjacency_list[node1].append((node2, distance))
 		if self.directed == False:
-			self.adjacency_list[node1].append(node1)
+			self.adjacency_list[node2].append((node1, distance))
 		return flag
 
 	def display(self):
 		# Displays the graph in easily readable form
 		for node in self.adjacency_list.keys():
-			print node.key, ":", ', '.join([str(child_node.key) for child_node in self.adjacency_list[node]])
+			print node.key, ":", ', '.join([str(child_node[0].key) for child_node in self.adjacency_list[node]])
 
 	def remove_connection(self, node1, node2):
 		# Removes a connection in the graph by removing an element node2 from the list corresponding to node1
@@ -89,8 +92,21 @@ class Graph:
 		# from the source to target									#
 		# Make sure that no path lengths are negative!				#
 		# --------------------------------------------------------- #
+		unvisited_nodes = [self.nodes[node] for node in self.nodes]
 
+		# tentative_distance keeps track of current lowest tentative distance from 'source' to each node
+		# we set the distance to the source to be 0, and +inf for all others
+		tentative_distance = {}
+		tentative_distance[source] = 0
+		for node in self.nodes:
+			if node != source:
+				tentative_distance[self.nodes[node]] = float('+inf')
 
+		# start exploring nodes, starting with the source
+		current_node = source
+
+		while (len(unvisited_nodes) != 0):
+			neighbours = 0
 
 
 
