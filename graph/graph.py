@@ -1,6 +1,11 @@
 '''
 	IMPLEMENTATION OF GRAPH DATA STRUCTURE IN PYTHON
 '''
+# import stack and use it to return shortest path
+import os, sys
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "stack/"))
+
+from stack import Stack
 from collections import defaultdict
 from operator import attrgetter
 
@@ -98,6 +103,7 @@ class Graph:
 		source = self.nodes[sourcekey]
 		target = self.nodes[targetkey]
 
+		path = {}	# will be a dict of stacks keeping track of the shortest path till node
 		unvisited_nodes = [self.nodes[node] for node in self.nodes]
 
 		# tentative_distance keeps track of current lowest tentative distance from 'source' to each node
@@ -122,7 +128,14 @@ class Graph:
 				# see add_connection method
 				# print "checking neightbour", neighbourTuple[0].key, "of node", current_node.key
 				distance = neighbourTuple[1]
-				tentative_distance[neighbourTuple[0]] = min(tentative_distance[neighbourTuple[0]], tentative_distance[current_node] + distance)
+				newTentativeDistance = tentative_distance[current_node] + distance
+
+				if tentative_distance[neighbourTuple[0]] > newTentativeDistance:
+					# update hte tentative distance with the smaller one
+					tentative_distance[neighbourTuple[0]] = newTentativeDistance
+
+					# the shortest path to this node is through the current node
+					path[neighbourTuple[0].key] = current_node.key
 
 			# remove current_node from the unvisited set
 			unvisited_nodes.remove(current_node)
@@ -132,9 +145,16 @@ class Graph:
 		for n in tentative_distance:
 			print n.key, ":", tentative_distance[n]
 		'''
-		# print the shortest path
-		
+		# reverse traverse the shortest path, add to stack
+		final_path = Stack()
+		node = targetkey
+		final_path.push(targetkey)
 
+		while node != sourcekey:
+			final_path.push(path[node])
+			node = path[node]
+
+		final_path.display()
 		# return the shortest path from source to target
-		return tentative_distance[target]
+		return (final_path, tentative_distance[target])
 
