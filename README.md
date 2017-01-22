@@ -7,10 +7,16 @@ Implementation of basic Data Structures and fundamental algorithms as personal r
 * Stack
 * Queue
 * Graph
+* Heap
 
 ## Sorting Algorithms implemented
 * Merge Sort
+* Quick Sort
+* Selection Sort
+* Insertion Sort
+* Bubble Sort
 
 ## Graphing Algorithms implemented
 * DFS
 * BFS
+* Dijkstra's Algorithm
