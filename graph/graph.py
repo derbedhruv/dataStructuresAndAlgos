@@ -86,12 +86,18 @@ class Graph:
 		except:
 			return False
 
-	def shortest_path(self, source, target):
+	def shortest_path(self, sourcekey, targetkey):
 		# --------------------------------------------------------- #
 		# Implements Dijkstra's algorithm to find the shortest path #
 		# from the source to target									#
 		# Make sure that no path lengths are negative!				#
 		# --------------------------------------------------------- #
+		# get the actual pointers to the nodes
+		# TODO: deal with case where the keys are not in the graph
+		# TODO: How to handle multiple similar keys? OR assert unique keys
+		source = self.nodes[sourcekey]
+		target = self.nodes[targetkey]
+
 		unvisited_nodes = [self.nodes[node] for node in self.nodes]
 
 		# tentative_distance keeps track of current lowest tentative distance from 'source' to each node
@@ -99,14 +105,36 @@ class Graph:
 		tentative_distance = {}
 		tentative_distance[source] = 0
 		for node in self.nodes:
-			if node != source:
+			if self.nodes[node] != source:
 				tentative_distance[self.nodes[node]] = float('+inf')
 
 		# start exploring nodes, starting with the source
-		current_node = source
-
 		while (len(unvisited_nodes) != 0):
-			neighbours = 0
+			# update current_node to the one with the smallest tentative_distance (will be source itself at start)
+			_, current_node = min((tentative_distance[unvisited_node], unvisited_node) for unvisited_node in unvisited_nodes)
 
+			# get list of neighbours
+			neighbours = self.adjacency_list[current_node]
 
+			# compute updated tentative distances of neighbours
+			for neighbourTuple in neighbours:
+				# 'neighbourTuple' is a tuple of (node, distance_to_node) from current_node
+				# see add_connection method
+				# print "checking neightbour", neighbourTuple[0].key, "of node", current_node.key
+				distance = neighbourTuple[1]
+				tentative_distance[neighbourTuple[0]] = min(tentative_distance[neighbourTuple[0]], tentative_distance[current_node] + distance)
+
+			# remove current_node from the unvisited set
+			unvisited_nodes.remove(current_node)
+
+		'''
+		print "tentative distances from", sourcekey
+		for n in tentative_distance:
+			print n.key, ":", tentative_distance[n]
+		'''
+		# print the shortest path
+		
+
+		# return the shortest path from source to target
+		return tentative_distance[target]
 
