@@ -83,6 +83,27 @@ class Linkedlist:
 		else:
 			return False
 
+	def reverse(L):
+		# reverse the linkedlist in-situ
+	  def nextNode(target):
+	    node = L.startNode
+	    while(node.next != target):
+	      node = node.next
+	    return node
+	  target = None
+	  current = None
+	  while (target != L.startNode):
+	    next = nextNode(target)
+	    if (target == None):
+	      revStart = next
+	      current = revStart
+	    else:
+	      current.next = next
+	      current = next
+	    target = next
+	  target.next = None
+	  L.startNode = revStart
+
 
 if __name__ == "__main__":
 	## Interview practice question: will code up a linkedlist which has two types of elements and then use the "runner" approach to change the nodes to alternate between each type
