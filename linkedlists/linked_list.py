@@ -83,26 +83,26 @@ class Linkedlist:
 		else:
 			return False
 
-	def reverse(L):
+	def reverse(self):
 		# reverse the linkedlist in-situ
-	  def nextNode(target):
-	    node = L.startNode
-	    while(node.next != target):
-	      node = node.next
-	    return node
-	  target = None
-	  current = None
-	  while (target != L.startNode):
-	    next = nextNode(target)
-	    if (target == None):
-	      revStart = next
-	      current = revStart
-	    else:
-	      current.next = next
-	      current = next
-	    target = next
-	  target.next = None
-	  L.startNode = revStart
+		# initialize pointers
+		P1 = None
+		P2 = self.startNode
+		P3 = P2.next
+		def incrementPointers(P1, P2, P3):
+			# simple function to increment the pointers
+			P1 = P2
+			P2 = P3
+			P3 = P3.next
+			return (P1, P2, P3)
+		# Now begin the while loop
+		while (P3 != None):
+			# make the second node in the window point to the first
+			P2.next = P1
+			P1, P2, P3 = incrementPointers(P1, P2, P3)
+		P2.next = P1
+		self.startNode = P2
+
 
 
 if __name__ == "__main__":
