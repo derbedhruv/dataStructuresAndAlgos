@@ -1,9 +1,11 @@
 # Class for implementing a binary tree node
+'''
 class BinaryTreeNode:
 	def __init__(self, val, left=None, right=None):
 		self.val = val
 		self.left = left
 		self.right = right
+'''
 
 class Node:
 	def __init__(self, key, left=None, right=None):
@@ -12,8 +14,29 @@ class Node:
 		self.right = right
 
 class BinaryTree:
-	def __init__(self, startNode=Node(key=None)):
-		self.startNode = startNode
+	def __init__(self, startNode=None, sortedList=None):
+		def median(l):
+			# finds the median of a SORTED list l
+			n = len(l)
+			if n%2 == 0:
+				return (n/2 - 1, l[n/2 - 1])
+			else:
+				return (n/2, l[n/2])
+		def tree(l):
+			# converts a sorted list l into a binary tree and returns the reference to the head node
+			if len(l) == 0:
+				return
+			i, med = median(l)
+			node = Node(med)
+			node.left = tree(l[:i])
+			node.right = tree(l[i+1:])
+			return node
+
+		if startNode != None:
+			self.startNode = startNode
+		if sortedList != None:
+			self.startNode = tree(sortedList)
+
 
 	def display(self):
 		# print out the nodes (all in a line for now)

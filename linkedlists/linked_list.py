@@ -37,8 +37,12 @@ class Linkedlist:
 	# ---------------------------------------- #
 	def __init__(self, startNode = None):
 		self.startNode = startNode
-
-	def insert(self, nextNode):
+	def insert(self, node):
+		# just add to the head
+		node.next = self.startNode
+		self.startNode = node
+		
+	def insertAtEnd(self, nextNode):
 		# keep looping till you reach the end and then insert
 		current_Node = self.startNode
 		if (current_Node != None):

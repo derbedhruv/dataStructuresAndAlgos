@@ -1,30 +1,37 @@
 import random
 
-def quicksort(array):
+def quicksort(array, first, last):
 	# --------------------------------------------------------- #
 	# Quick sort on arrays (of ints)			   				#
 	# ---------------------------------------------------------	#
 	# Will perform quicksort and return the sorted arrays		#
 	# Input is a list of ints									#
+	# sorts in-place (no extra memory overhead)
 	# ---------------------------------------------------------	#
-	# base case
-	if len(array) <= 1:
-		return array
+	# The swap subroutine
+	def swap(i, j):
+		# Swaps the i'th and j'th elements of "array"
+		array[i], array[j] = array[j], array[i]
 
-	# choose pivot
-	pivot = random.sample(array, 1)[0]
+
+	# base case
+	n = last - first + 1
+	if n <= 1:
+		return
+
+	def pivot(arr, first, last):
+		# pivot around the last element - change to random element
+		p = arr[last]
+		i = first
+		for j in range(first, last):
+			if arr[j] <= pivot:
+				swap(i, j)
+		swap(i, p)
+		return i
 
 	# re-arrange elements around pivot into two new arrays
-	smaller = []
-	larger = []
-	for element in array:
-		if element < pivot:
-			smaller.append(element)
-		if element > pivot:
-			larger.append(element)
+	p = pivot(array, first, last)
 
 	# Now call quicksort on the two smaller arrays
-	sorted_smaller = quicksort(smaller)
-	sorted_larger = quicksort(larger)
-
-	return sorted_smaller + [pivot] + sorted_larger
+	quicksort(array, first, p-1)
+	quicksort(array, p+1, last)
